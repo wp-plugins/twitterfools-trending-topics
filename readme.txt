@@ -15,7 +15,8 @@ This plugin allows you to add a sidebar widget to your site that displays Twitte
 Unlike some other Twitter Plugins, this one caches Twitter data, and provides you with a cache timeout option that 
 lets you comply with Twitter API rate limiting. 
 
-Homepage and Support: http://www.twitterfools.com/plugins/twitterfools-trending-topics
+Homepage and Support: http://www.twitterfools.com/plugins/wordpress-plugin-twitterfools-trending-topics/
+
 Follow us on Twitter: http://www.twitter.com/twitfools
 
 Requirements:
