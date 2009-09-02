@@ -23,7 +23,7 @@ Requirements:
 
 PHP 5.x
 
-WordPress 2.5+
+WordPress 2.8+
 
 MySQL 5.x
 
