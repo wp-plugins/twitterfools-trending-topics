@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: TwitterFools Trending Topics
-Plugin URI: http://www.twitterfools.com/plugins/twitterfools-trending-topics
+Plugin URI: http://www.twitterfools.com/plugins/wordpress-plugin-twitterfools-trending-topics/
 Description: This plugin allows you to add a sidebar widget to your site that displays Twitter's trending topics.  Unlike some other Twitter Plugins, this one caches Twitter data, and provides you with a cache timeout option that lets you comply with Twitter API rate limiting. 
 Author: Twitterfools.com - A Member of The Fools Network
 Version: 1.0.1
