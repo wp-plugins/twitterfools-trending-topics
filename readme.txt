@@ -22,7 +22,9 @@ Follow us on Twitter: http://www.twitter.com/twitfools
 Requirements:
 
 PHP 5.x
+
 WordPress 2.5+
+
 MySQL 5.x
 
 == Installation ==
@@ -31,12 +33,11 @@ Simple Installation: Install the plug-in from your Wordpress console and activat
 
 Manual Installation is also very simple
 
-1. Download a copy of the twitterfools
-
-1. Upload `twitterfools-trending-topics` to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Add the trending topics to your sidebar or other area using the Appearance->Widgets dashboard
-4. Enter a title and a cache timeout value in the widget instance. The cache time out values are 
+1. Download a copy of the twitterfools-trending-topics zip file
+2. Unpack and upload the twitterfools-trending-topics folder to the `/wp-content/plugins/` directory
+3. Activate the plugin through the 'Plugins' menu in WordPress
+5. Add the trending topics to your sidebar or other area using the Appearance->Widgets dashboard
+5. Enter a title and a cache timeout value in the widget instance. The cache time out values are 
 in seconds.  If omitted, results will be cached for 300 seconds (5 minutes).
 
 == Screenshots ==
