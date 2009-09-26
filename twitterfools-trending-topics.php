@@ -1,10 +1,10 @@
 <?php
 /**
 Plugin Name: TwitterFools Trending Topics
-Plugin URI: http://www.twitterfools.com/plugins/wordpress-plugin-twitterfools-trending-topics/
-Description: This plugin allows you to add a sidebar widget to your site that displays Twitter's trending topics.  Unlike some other Twitter Plugins, this one caches Twitter data, and provides you with a cache timeout option that lets you comply with Twitter API rate limiting. 
+Plugin URI: http://www.twitterfools.com/plugins/twitterfools-trending-topics
+Description: This plugin allows you to add a sidebar widget to your site that displays Twitter's trending topics.  Unlike some other Twitter Plugins, this one caches Twitter data, and provides you with a cache timeout option that lets you comply with Twitter API rate limiting. As ov v1.0.2, we added the ability to display topic descriptions from WhatTheTrend.com. 
 Author: Twitterfools.com - A Member of The Fools Network
-Version: 1.0.1
+Version: 1.0.2
 Author URI: http://www.twitterfools.com/
 
 Copyright (C) 2009  The Fools Network
@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 @package TwitterFools_TrendingTopics
 @author The Fools Network
-@version 1.0.1
+@version 1.0.2
 
 */
 
@@ -176,17 +176,84 @@ class TwitterFools_Trending_Topics extends WP_Widget {
 	*/	
 	function displayTopics($raw_data){
 		
+		$ttt_url = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
+		
 		if ($raw_data)
 		{
 		
-		$topics = explode('|', $raw_data );
 		
+					
+// we like ajax :)			
+		echo <<<__EOF__
+	
+<script type="text/javascript">
+
+var topicArr = new Array(10);
+
+function getTTTDescription(id)
+{
+
+	divID = '#result_' + id;
+	// only run if the current div is hidden
+	if (jQuery(divID).is(":hidden"))
+	{
+
+	
+		topic = topicArr[id];
+		topic = topic.replace(/%22/g,"");
+		topic = topic.split("+OR+");
+
+		output = '<input type="image" src="$ttt_url/progress.gif" height="16" width="16">';
+
+		theURL = "$ttt_url" + "proxy.php?topic=" + topic[0] + "&id="  + id + "&path=" + "$ttt_url";
+	
+		jQuery(divID).html(output);
+    	jQuery(divID).load(theURL);
+   	 	jQuery(divID).show("normal");    
+    
+	}
+    
+	
+}
+
+function collapseTTTDescription(id)
+{
+	divID = '#result_' + id;
+	jQuery(divID).hide("slow");
+	
+}
+
+
+
+</script>
+		
+__EOF__;
+			
+			
+		$topics = explode('|', $raw_data );
+		$topic_counter = 0;
 		echo '<ul>';
+		
 			foreach ($topics as $topic){
-				echo '<li><a href="http://twitter.com/search?q='.urlencode($topic).'" target="_blank">'.$topic.'</a></li>';
+				$topic_counter++;
+				$theTopic = urlencode($topic);
+				$result_id = "result_" . $topic_counter;
+				
+		echo <<<__EOF__
+		<script type="text/javascript">
+		topicArr[$topic_counter] = "$theTopic";
+		var timeoutID_$topic_counter = 0;
+		</script>
+		<li><a href="http://twitter.com/search?q=$theTopic"  target="_blank" onMouseOver="timeoutID_$topic_counter=setTimeout( 'getTTTDescription($topic_counter)', 500);" onMouseOut="clearTimeout(timeoutID_$topic_counter);" >$topic</a></li>
+		<div id='$result_id' style="display:none;"></div>
+				
+__EOF__;
 			}
 	
+		echo '<li><a href="http://www.whatthetrend.com/" target="_blank"><img src="http://www.whatthetrend.com/images/wtt_api_badge_120.png" border="0" title="Twitterfools Trending Topics gets its metadata from WhatTheTrend.com.  Hover over a topic to discover why it\'s trending" target="_blank"></a></li>'	;
+		echo '<a href="http://www.twitterfools.com" target="_blank"><img src="' . $ttt_url . 'spacer.gif" height="1" width="1" alt="Twitterfools Trending Topics Is Brought to you by TwitterFools.com"></a>';
 		echo '</ul>';
+		
 		}
 		
 	}
@@ -212,7 +279,19 @@ class TwitterFools_Trending_Topics extends WP_Widget {
   function TTT_Init() {
   	register_widget('TwitterFools_Trending_Topics');
   }
+
   
   add_action('widgets_init', 'TTT_Init');
+  add_action('wp_print_scripts', 'WP_TTT_JSAction'); 
 
+function WP_TTT_JSAction() {  
+	$ttt_plugin_url = trailingslashit( get_bloginfo('wpurl') ).PLUGINDIR.'/'. dirname( plugin_basename(__FILE__) );    
+	echo "";
+	if (!is_admin()) 	{ 	  
+		wp_enqueue_script('jquery'); 	  
+	 	} 
+}
+		 
+  
+  
 ?>
