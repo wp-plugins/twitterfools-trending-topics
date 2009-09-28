@@ -55,7 +55,6 @@ they're still popular, since many people are tweeting them, but the reasons behi
 to trend was often a mystery.  With version 1.0.2 of Twitterfools Trending Topics, user can now roll over 
 a topic and see descriptive information from WhatTheTrend.com about each topic.
 
-= I get an error related to 
 
 == Changelog ==
 
